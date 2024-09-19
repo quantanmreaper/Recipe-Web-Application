@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECIPE APPLICATION</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="user-registration">
+    
+    <main>
+        <a href="index.html" class="back-arrow">&#8592; Back to Home</a>
+        <form id="registrationForm" class="regform" action="" method="post">
+            <label for="username">UserName:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="usertype">UserType:</label>
+            <select id="usertype" name="usertype" required>
+                <option value="">Select UserType</option>
+                <option value="user">User</option>
+                <option value="recipe_owner">Recipe Owner</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <label for="profilephoto">ProfilePhoto:</label>
+            <input type="file" id="profilephoto" name="profilephoto">
+
+            <input type="submit" value="SignUp" class="submit-btn">
+        </form>
+        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
