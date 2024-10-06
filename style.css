@@ -334,7 +334,7 @@
         background-color: #ba3b00;
     } 
 
-   /* Categories Section */
+/* Categories Section */ 
 .categories {
     padding: 50px 0;
     background-color: white;
@@ -349,7 +349,7 @@
 .category-list {
     display: flex;
     flex-wrap: wrap; /* Allows wrapping of categories if needed */
-    justify-content: space-around;
+    justify-content: space-between; /* Adjusted for better spacing */
     gap: 20px; /* Space between categories */
 }
 
@@ -358,13 +358,14 @@
     text-align: center;
     text-decoration: none; /* Removes underline from links */
     color: inherit; /* Inherits color from parent */
-    width: 200px; /* Consistent width for all categories */
+    width: calc(25% - 20px); /* Adjusted width for four categories per row, accounting for gap */
+    box-sizing: border-box; /* Ensures padding and border are included in width */
 }
 
 .category img {
-    width: 100%;
+    width: 70%;
     height: 200px;
-    object-fit: cover;
+   
     border-radius: 50%;
     transition: transform 0.3s;
 }
@@ -377,8 +378,53 @@
 .category:hover img {
     transform: scale(1.05);
 }
+/* Categories Section */
+.popular-categories {
+    padding: 50px 0;
+    background-color: white;
+}
 
-/* Latest Collection Section */
+.popular-categories h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.category-grid {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping of categories if needed */
+    justify-content: center; /* Center the categories */
+    gap: 10px; /* Minimal space between images */
+}
+
+.category-item {
+    display: block;
+    text-align: center;
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherits color from parent */
+    width: calc(22% - 10px); /* Reduced width for 4 items per row with minimal gap */
+    box-sizing: border-box; /* Ensures padding and border are included in width */
+}
+
+.category-item img {
+    width: 90%; /* Increased width to 90% of the category item's width */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 180px; /* Increased maximum height for images */
+    object-fit: cover; /* Ensure the image covers the area */
+    border-radius: 50%; /* Adjust the border style as needed */
+    transition: transform 0.3s;
+}
+
+.category-item h3 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.category-item:hover img {
+    transform: scale(1.05);
+}
+
+
 /* Latest Collection Section */
 .latest-collection {
     padding: 50px 0;
@@ -453,33 +499,51 @@
     background-color: rgb(255, 126, 28);
 }
 
+/* footer styling*/
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
 
-    /* Footer Styling */
-    footer {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 20px;
-    }
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px; /* Controls spacing between the two sections */
+}
 
-    footer ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        margin: 10px 0;
-    }
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    width: 45%; /* Adjust width to reduce the gap between sections */
+}
 
-    footer ul li {
-        margin: 0 15px;
-    }
 
-    footer ul li a {
-        color: white;
-        text-decoration: none;
-        transition: color 0.3s;
-    }
 
-    footer ul li a:hover {
-        color: #ff7e1c;
-    }
+.footer-links, .footer-socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+ .footer-socials li {
+    margin-left: 10px;
+}
+
+.footer-links li a, .footer-socials li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links li a:hover, .footer-socials li a:hover {
+    color: #ff7e1c;
+}
+
+footer p {
+    margin-top: 20px;
+    text-align: center;
+}
