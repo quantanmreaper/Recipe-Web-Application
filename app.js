@@ -24,7 +24,7 @@ window.onload = function() {
 
     // Start the auto-slide timer
     var currentImg = 0;
-    var interval = 2500;
+    var interval = 1500;
     var timer = setInterval(autoSlide, interval);
 
     function autoSlide() {
