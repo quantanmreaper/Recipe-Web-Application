@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= recipe.recipe_name %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1><!-- <img src="./images/logo.jpg" width="50px" height="100px" alt="Recipe Hub Logo"> -->Recipe Hub</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/" >Home</a></li>
+                <li class="dropdown">
+                    <a href="/categories" class="dropbtn" class="active">Recipes</a>
+                    <div class="dropdown-content">
+                        <a href="/favorites">Favorites</a>
+                        <a href="/tutorials">Cooking Tutorials</a>
+                    </div>
+                </li>
+                <li><a href="/userreg">Profile</a></li>
+                <li><a href="/categories" >Categories</a></li>
+                <li><a href="/userreg">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Recipe Section -->
+    <div class="recipe-container">
+        <h1 class="recipe-title"><%= recipe.recipe_name %></h1>
+        <h2><%= recipe.category%></h2>
+        <hr>
+        <div class="recipe-meta">
+            <span class="username">User123</span>
+            <span class="fa-date">Date: 10/09/2024</span>
+            <span class="reviews">
+                <span class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </span>
+                <span class="review-count">(120 reviews)</span>
+            </span>
+        </div>
+        <div class="recipe-image">
+            <img src="/images/chillisoup.png" alt="Dum Veg Biryani" width="1389px" height="781px">
+        </div>
+    
+        <!-- Recipe details section -->
+        <div class="recipe-details">
+            <!-- Ingredients Section -->
+            <div class="ingredients">
+                <h2>Ingredients</h2>
+                <ul>
+                <% recipe.ingredients.split(/\r?\n/).forEach(ingredient => { %>
+                    <li><%= ingredient.trim() %></li>
+                <% }) %>
+                </ul>
+            </div> 
+            
+    
+            <!-- Instructions Section -->
+            <div class="instructions">
+                <h2>Instructions</h2>
+
+                <ul>
+                    
+                    <% recipe.recipe_steps.split(/\r?\n/).forEach(recipe_steps => { %>
+                        <li><%= recipe_steps.trim() %></li>
+                    <% }) %>
+                  
+                </ul>
+
+               <!--  <ol type="1">
+                    <li>Soak rice for 30 minutes.</li>
+                    <li>Heat ghee and fry onions till golden brown.</li>
+                    <li>Add mixed vegetables and spices. Cook for 10 minutes.</li>
+                    <li>Layer the rice and cook on dum for 20 minutes.</li>
+                    
+                     Add more steps
+                </ol> -->
+            </div>
+    
+            <!-- Nutritional Value Section -->
+            <div class="nutrition">
+                <h2>Nutritional Facts</h2>
+                <ul>
+                    <% recipe.nutritional_value.split(/\r?\n/).forEach(nutritional_value => { %>
+                        <li><%= nutritional_value %></li>
+                    <% }) %>
+                </ul>
+
+            </div>
+            
+        </div>
+    </div>
+    <br><br><br><br><br>
+
+<!-- Footer Section -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>Recipe Hub</h2>
+            <p>
+            Recipe Hub is a platform to enjoy the richness of taste
+            Enjoy the taste of life with Recipe Hub everyday with new and fresh recipes
+        </p>
+        </div>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Recipe Hub</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Conditions</a></li>
+                    <li><a href="#">Cookies</a></li>
+                    <li><a href="#">Copyright</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2020 RecipeHub - All rights reserved</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+    
+</body>
+</html>
