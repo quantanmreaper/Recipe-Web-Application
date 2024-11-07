@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Hub - Recipes</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Recipe Hub - All Recipes</h1>
+    </header>
+    <div class="recipe-list">
+        <% recipes.forEach(recipe => { %>
+            <div class="recipe-item">
+                <h2><%= recipe.recipe_name %></h2>
+                <p><strong>Ingredients:</strong> <%= recipe.ingredients %></p>
+                <p><strong>Steps:</strong> <%= recipe.recipe_steps %></p>
+                <p><strong>Category:</strong> <%= recipe.category %></p>
+                <% if (recipe.finalimage) { %>
+                    <img src="<%= recipe.finalimage %>" alt="<%= recipe.recipe_name %>" width="200">
+                <% } %>
+            </div>
+            <hr>
+        <% }) %>
+    </div>
+</body>
+</html>
