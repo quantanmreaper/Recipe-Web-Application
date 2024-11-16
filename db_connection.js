@@ -72,6 +72,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -98,20 +100,20 @@ app.get('/recipe', (req, res) => {
 app.get('/userreg', (req, res) => {
     res.render('userreg');
 });
-app.get('/favorites', (req, res) => {
+/* app.get('/favorites', (req, res) => {
     res.render('favorites'); 
 });
 
 app.get('/tutorials', (req, res) => {
     res.render('tutorials'); 
 });
-
+ */
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware to parse URL-encoded form data
-app.use(bodyParser.urlencoded({ extended: true }));
-
+//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Serve the HTML file
 app.get('/', (req, res) => {
@@ -119,27 +121,38 @@ app.get('/', (req, res) => {
 });
 
 app.get('/userreg', (req, res) => {
-    res.sendFile(path.join(__dirname, '/userreg')); // Ensure the path is correct
+    res.sendFile(path.join(__dirname, '/userreg')); 
+});
+
+app.get('/login',(req, res) => {
+    res.sendFile(path.join(__dirname, '/login')); 
 });
 
 // Handle the form submission for recipes
 //below is the route for creating the recipe
 app.post('/recipe-submission', upload.single('recipephoto'), function(req, res) {
-    const { recipename, ingredients, recipesteps, recipecategory } = req.body;
-    const recipePhotoPath = req.file ? '/uploads/' + req.file.filename : null;
 
-    console.log("Form data received:", req.body); // Debugging line
-
-    const sql = "INSERT INTO recipe (recipe_name, ingredients, recipe_steps, category, finalimage) VALUES (?, ?, ?, ?, ?)";
-
-    con.query(sql, [recipename, ingredients, recipesteps, recipecategory, recipePhotoPath], function(err, result) {
-        if (err) {
-            console.error("Error inserting data:", err);
-            return res.status(500).send("Database error");
-        }
-        console.log("Recipe data inserted successfully");
-        res.send("Recipe submitted successfully!");
-    });
+    try{
+        const { recipename, ingredients, recipesteps, recipecategory } = req.body;
+        const recipePhotoPath = req.file ? '/uploads/' + req.file.filename : null;
+    
+        console.log("Form data received:", req.body); // Debugging line
+    
+        const sql = "INSERT INTO recipe (recipe_name, ingredients, recipe_steps, category, finalimage) VALUES (?, ?, ?, ?, ?)";
+    
+        con.query(sql, [recipename, ingredients, recipesteps, recipecategory, recipePhotoPath], function(err, result) {
+            if (err) {
+                console.error("Error inserting data:", err);
+                return res.status(500).send("Database error");
+            }
+            console.log("Recipe data inserted successfully");
+            res.send("Recipe submitted successfully!");
+        });
+    }  catch (error) {
+        console.error("Error during registration:", error);
+        res.status(500).send("Server error");
+    }
+ 
 });
 
 // Registration route
@@ -166,6 +179,9 @@ app.post('/user-submission', upload.single('profilephoto'), async (req, res) => 
             }
             console.log("User registered successfully");
             res.send("Registration successful!");
+         
+        
+
         });
     } catch (error) {
         console.error("Error during registration:", error);
@@ -173,6 +189,36 @@ app.post('/user-submission', upload.single('profilephoto'), async (req, res) => 
     }
 });
 
+app.post('/login-verification', async (req, res) => {
+    console.log("Received login request");
+    console.log("Request body:", req.body); // Debugging line to check form data
+    try {
+        const { username, password, usertype } = req.body;
+        console.log("Parsed form data:", { username, password, usertype }); // Debugging line to check parsed data
+
+        // SQL query to check if the user exists with the provided username, password, and usertype
+        const sql = "SELECT * FROM users WHERE username = ? AND usertype = ? AND password = ?";
+    
+        con.query(sql, [username, usertype, password], (err, results) => {
+            if (err) {
+                console.error("Error fetching user:", err);
+                return res.status(500).send("Database error");
+            }
+            console.log("Query results:", results); // Debugging line to check query results
+    
+            if (results.length > 0) {
+                // If user is found, redirect to the index page
+                return res.send("<script>alert('Login Successful!'); window.location.href='/index';</script>");
+            } else {
+                // If user is not found, show an alert and stay on the login page
+                return res.send("<script>alert('Incorrect username or password'); window.location.href='/login';</script>");
+            }
+        });
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).send("Server error");
+    }
+});
 
 // New route for displaying all the recipes
 app.get('/recipe/:id', (req, res) => {
