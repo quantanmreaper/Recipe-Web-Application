@@ -29,6 +29,7 @@ const multer = require('multer');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const session = require('express-session'); // use when checking the user logged in status
 //const bcrypt = require('bcrypt'); //this is used for hashing passwords
 const { emitWarning } = require('process');
 
@@ -74,10 +75,16 @@ const upload = multer({ storage: storage });
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.render('index');
-});
+// Configure session middleware
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
 
+app.get('/', (req, res) => {
+    res.render('index', { loggedIn: req.session.loggedIn });
+});
 
 app.get('/categories', (req, res) => {
     res.render('categories');
@@ -88,9 +95,25 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-    res.render('profile');
-    
+    if (!req.session.loggedIn) {
+        return res.redirect('/login');
+    }
 
+    const username = req.session.username; // Assuming username is stored in session
+    const sql = "SELECT username, email, profilephoto FROM users WHERE username = ?";
+
+    con.query(sql, [username], (err, results) => {
+        if (err) {
+            console.error("Error fetching user details:", err);
+            return res.status(500).send("Database error");
+        }
+        if (results.length > 0) {
+            const user = results[0];
+            res.render('profile', { user, loggedIn: req.session.loggedIn });
+        } else {
+            res.status(404).send("User not found");
+        }
+    });
 });
 
 app.get('/recipe', (req, res) => {
@@ -210,7 +233,9 @@ app.post('/login-verification', async (req, res) => {
             console.log("Query results:", results); // Debugging line to check query results
     
             if (results.length > 0) {
-                // If user is found, redirect to the index page
+                // If user is found, set session and redirect to the index page
+                req.session.loggedIn = true;
+                req.session.username = username; // Store username in session
                 return res.send("<script>alert('Login Successful!'); window.location.href='/';</script>");
             } else {
                 // If user is not found, show an alert and stay on the login page
@@ -258,6 +283,15 @@ app.get('/recipe', (req, res) => {
     });
 });
 
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error during logout:", err);
+            return res.status(500).send("Server error");
+        }
+        res.redirect('/');
+    });
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
