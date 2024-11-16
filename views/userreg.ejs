@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RECIPE APPLICATION</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
 
 </head>
 <body class="user-registration">
     
     <main>
-        <a href="index.html" class="back-arrow">&#8592; Back to Home</a>
-        <form id="registrationForm" class="regform" action="/register" method="post" enctype="multipart/form-data">
+        <a href="/" class="back-arrow">&#8592; Back to Home</a>
+        <form id="registrationForm" class="regform" action="/user-submission" method="post" enctype="multipart/form-data">
             <label for="username">UserName:</label>
             <input type="text" id="username" name="username" required>
             <label for="email">Email:</label>
@@ -31,7 +31,7 @@
             <input type="submit" value="SignUp" class="submit-btn">
         </form>
         
-        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+        <p class="login-link">Already have an account? <a href="/login">Login here</a></p>
     </main>
    <!-- Load Supabase and bcrypt.js before app.js -->
 <!-- <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
