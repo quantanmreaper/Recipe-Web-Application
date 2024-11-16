@@ -23,7 +23,11 @@
                 </li>
                 <li><a href="/profile" class="active">Profile</a></li>
                 <li><a href="/categories">Categories</a></li>
-                <li><a href="/login">Login</a></li>
+                <% if (!loggedIn) { %>
+                    <li><a href="/login">Login</a></li>
+                <% } else { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
             </ul>
         </nav>
     </header>
@@ -31,39 +35,22 @@
     <section class="profile-section">
         <h1>Profile</h1>
         <hr>
-
-        
-            <div class="profile-image">
-                <img src="./images/profile.jpg" alt="Profile Image" width="200px" height="200px"/>
-            </div>
-
-                <button class="btn-change-photo">Change photo</button>
-                <button class="btn-delete-photo">Delete</button>
-            
-
-            <form action="#" method="POST" class="profileform">
-                <div class="form-group">
-                    <ul>
-                    </ul>
-                    <label for="full-name">Full Name</label>
-                    <input type="text" id="full-name" placeholder="dhruvin bapu">
-                </div>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="eeshan uncle">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="lorus@gmail.com">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="************">
-                    <a href="#" class="change-password">Change</a>
-                </div>
-                <button type="submit" class="btn-save">Save</button>
-            </form>
+        <div class="profile-image">
+            <img src="<%= user.profilephoto %>" alt="Profile Image" width="200px" height="200px"/>
         </div>
+        <button class="btn-change-photo">Change photo</button>
+        <button class="btn-delete-photo">Delete</button>
+        <form action="#" method="POST" class="profileform">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" value="<%= user.username %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" value="<%= user.email %>" readonly>
+            </div>
+            <button type="submit" class="btn-save">Save</button>
+        </form>
     </section>
 
 </body>
