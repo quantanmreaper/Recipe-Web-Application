@@ -1,28 +1,3 @@
-/*  const mysql = require('mysql');
-
-//creating the connection pool
-let con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "recipeapp"
-});
-
-con.connect(function(err) {
-    if (err) {throw err;}
-    console.log("Connected Successfully!");
-
-   
-
-        let sql = "INSERT INTO admins (admin_name, admin_email, admin_password) VALUES ('Mepani', 'mepani@gmail.com', 'mepani123')";
-
-        con.query(sql, function(err, result){
-            if (err) {throw err;}
-            console.log('Data inserted successfully');
-        });
-});
- 
-
- */
 const express = require('express');
 const mysql = require('mysql');
 const multer = require('multer');
@@ -126,11 +101,11 @@ app.get('/userreg', (req, res) => {
 /* app.get('/favorites', (req, res) => {
     res.render('favorites'); 
 });
-
+*/
 app.get('/tutorials', (req, res) => {
-    res.render('tutorials'); 
+    res.render('tutorials', { loggedIn: req.session.loggedIn });
 });
- */
+ 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -291,6 +266,20 @@ app.get('/logout', (req, res) => {
         }
         res.redirect('/');
     });
+});
+
+app.get('/api/random-recipes', (req, res) => {
+    const recipes = [
+        { title: 'How to Make Spaghetti Carbonara', youtubeId: '3AAdKl1UYZs' },
+        { title: 'Easy Homemade Pizza', youtubeId: 'e6L5eUQe8rI' },
+        { title: 'Classic Beef Stew', youtubeId: '8K6ZP4l6z5s' },
+        { title: 'Chicken Alfredo Pasta', youtubeId: 'y8Yv4pnO7qc' },
+        { title: 'Vegetarian Tacos', youtubeId: '1y1e5Z4z5s8' },
+        { title: 'How to Make Sushi at Home', youtubeId: 'I1UDS2kgqY8' },
+        { title: 'Homemade Lasagna Recipe', youtubeId: '3AAdKl1UYZs' },
+        { title: 'Perfect Chocolate Cake', youtubeId: 'dQw4w9WgXcQ' }
+    ];
+    res.json(recipes);
 });
 
 // Start the server

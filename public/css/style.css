@@ -1,4 +1,4 @@
-    /* Index/ home page design */
+/* Index/ home page design */
     .mainbody{
         font-family: 'Poppins', sans-serif; /* Use Poppins or similar font */
         margin: 0;
@@ -819,4 +819,20 @@ hr {
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
+}
+
+.tutorials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.tutorials iframe {
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, and flex-basis */
+    max-width: 560px; /* Maximum width for each video */
+    border: none; /* Remove border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
