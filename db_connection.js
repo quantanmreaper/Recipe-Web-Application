@@ -128,6 +128,9 @@ app.get('/login',(req, res) => {
     res.sendFile(path.join(__dirname, '/login')); 
 });
 
+app.get('/profile',(req, res) => {
+    res.sendFile(path.join(__dirname, '/profile'));
+});
 // Handle the form submission for recipes
 //below is the route for creating the recipe
 app.post('/recipe-submission', upload.single('recipephoto'), function(req, res) {
@@ -208,7 +211,7 @@ app.post('/login-verification', async (req, res) => {
     
             if (results.length > 0) {
                 // If user is found, redirect to the index page
-                return res.send("<script>alert('Login Successful!'); window.location.href='/index';</script>");
+                return res.send("<script>alert('Login Successful!'); window.location.href='/';</script>");
             } else {
                 // If user is not found, show an alert and stay on the login page
                 return res.send("<script>alert('Incorrect username or password'); window.location.href='/login';</script>");
