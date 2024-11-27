@@ -17,7 +17,6 @@
                 <li class="dropdown">
                     <a href="/recipe">Recipes</a>
                     <div class="dropdown-content">
-                        <a href="/favorites">Favorites</a>
                         <a href="/tutorials">Cooking Tutorials</a>
                     </div>
                 </li>
@@ -40,6 +39,9 @@
         </div>
         <button class="btn-change-photo">Change photo</button>
         <button class="btn-delete-photo">Delete</button>
+        <% if (user.usertype === 'recipe_owner') { %>
+            <button class="btn-add-recipe" onclick="window.location.href='/recipereg'">Add Recipe</button>
+        <% } %>
         <form action="#" method="POST" class="profileform">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -48,6 +50,10 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" value="<%= user.email %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="usertype">UserType</label>
+                <input type="text" id="usertype" value="<%= user.usertype %>" readonly>
             </div>
             <button type="submit" class="btn-save">Save</button>
         </form>

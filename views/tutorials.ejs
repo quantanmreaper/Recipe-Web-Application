@@ -19,7 +19,6 @@
                     <a href="/categories" >Recipes</a>
                     <div class="dropdown-content">
                         <a href="/recipe">Recipes</a>
-                        <a href="/favourites">Favorites</a>
                         <a href="/tutorials">Cooking Tutorials</a>
                     </div>
                 </li>
@@ -55,19 +54,19 @@
                 <div class="footer-column">
                     <h3>Recipe Hub</h3>
                     <ul>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact us</a></li>
-                        <li><a href="#">Feedback</a></li>
+                        <li><a href="/">About us</a></li>
+                        <li><a href="/">Careers</a></li>
+                        <li><a href="/">Contact us</a></li>
+                        <li><a href="/">Feedback</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Conditions</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Copyright</a></li>
+                        <li><a href="/">Terms</a></li>
+                        <li><a href="/">Conditions</a></li>
+                        <li><a href="/">Cookies</a></li>
+                        <li><a href="/">Copyright</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -152,7 +151,7 @@
                         const tutorialsDiv = document.getElementById('tutorials');
                         data.forEach(recipe => {
                             const videoFrame = document.createElement('iframe');
-                            videoFrame.width = "560";
+                            videoFrame.width = "600";
                             videoFrame.height = "315";
                             videoFrame.src = `https://www.youtube.com/embed/${recipe.youtubeId}`;
                             videoFrame.frameBorder = "0";

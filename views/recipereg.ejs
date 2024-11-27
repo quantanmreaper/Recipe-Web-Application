@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RECIPE</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="recipe">
     <form id="recipeform" action="/recipe-submission" method="post" enctype="multipart/form-data">
@@ -17,6 +17,9 @@
         <label for="recipesteps">RecipeSteps:</label>
         <textarea id="recipesteps" name="recipesteps" rows="5" cols="30" required></textarea>
         
+        <label for="nutrition">Nutrition Value:</label>
+        <textarea id="nutrition" name="nutrition" rows="5" cols="30" required></textarea>
+
         <label for="recipecategory">RecipeCategory:</label>
         <select id="recipecategory" name="recipecategory" required>
             <option value="">Select RecipeCategory</option>

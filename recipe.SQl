@@ -16,11 +16,7 @@ CREATE TABLE admins (
     admin_password VARCHAR(255) NOT NULL
 );
 
--- Create table for categories
-CREATE TABLE category (
-    category_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    category_name VARCHAR(100) NOT NULL UNIQUE
-);
+
 
 -- Create table for recipes
 CREATE TABLE recipe (
@@ -31,9 +27,7 @@ CREATE TABLE recipe (
     category VARCHAR(255),
     finalimage BLOB, -- Storing image as binary data
     user_id INTEGER NOT NULL,
-    category_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES category (category_id) ON DELETE SET NULL
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 -- Create table for reviews

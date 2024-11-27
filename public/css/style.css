@@ -270,17 +270,17 @@
 
     .slider img {
         width: 100%;
-        height: auto; /* Adjust height automatically based on width */
+        height: auto; 
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%); /* Center the image */
-        opacity: 0; /* All images are hidden by default */
-        transition: opacity 1s ease-in-out; /* Smooth fade effect */
+        transform: translate(-50%, -50%); 
+        opacity: 0; 
+        transition: opacity 1s ease-in-out; 
     }
 
     .slider img:first-child {
-        opacity: 1; /* First image is visible on page load */
+        opacity: 1; 
     }
 
     /* Navigation dots */
@@ -365,10 +365,10 @@
 .category {
     display: block;
     text-align: center;
-    text-decoration: none; /* Removes underline from links */
-    color: inherit; /* Inherits color from parent */
-    width: calc(25% - 20px); /* Adjusted width for four categories per row, accounting for gap */
-    box-sizing: border-box; /* Ensures padding and border are included in width */
+    text-decoration: none; 
+    color: inherit;
+    width: calc(25% - 20px); 
+    box-sizing: border-box; 
 }
 
 .category img {
@@ -401,9 +401,9 @@
 
 .category-grid {
     display: flex;
-    flex-wrap: wrap; /* Allows wrapping of categories if needed */
-    justify-content: center; /* Center the categories */
-    gap: 10px; /* Minimal space between images */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 10px; 
 }
 
 .category-item {
@@ -416,11 +416,11 @@
 }
 
 .category-item img {
-    width: 90%; /* Increased width to 90% of the category item's width */
+    width: 90%; 
     height: auto; /* Maintain aspect ratio */
-    max-height: 180px; /* Increased maximum height for images */
-    object-fit: cover; /* Ensure the image covers the area */
-    border-radius: 50%; /* Adjust the border style as needed */
+    max-height: 180px; 
+    object-fit: cover;
+    border-radius: 50%; 
     transition: transform 0.3s;
 }
 
@@ -835,4 +835,52 @@ hr {
     border: none; /* Remove border */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+  
+  .search-container {
+    display: flex;
+    align-items: right;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2px 2px;
+    margin-top: 0px;
+    margin-left: 1500px;
+  }
+
+  .search-container input[type="text"] {
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 25px;
+    width: 100px; /* Minimal size of the input box */
+  }
+  
+  .search-container button {
+    background-color: #ff7e1c; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-container button:hover {
+    background-color: darkorange; /* Darker shade on hover */
+  }
+  
+  .direct-recipereg {
+    text-align: center;
+    font-size: 1.5em; /* Increase font size */
+    margin-top: 20px;
+}
+.direct-recipereg a {
+    color: #ff7e1c; /* Change link color */
+    text-decoration: none;
+    font-weight: bold;
+}
+.direct-recipereg a:hover {
+    text-decoration: underline;
 }
