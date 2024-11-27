@@ -5,18 +5,17 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const session = require('express-session'); // use when checking the user logged in status
-//const bcrypt = require('bcrypt'); //this is used for hashing passwords
 const { emitWarning } = require('process');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
 app.set('view engine', 'ejs'); // Set up EJS (embedded JavaScript template)
-
 app.set('views', path.join(__dirname, 'views'));
 
 // Corrected static file serving for css , js like static files
 app.use(express.static('public'));
-
 
 // Set up the database connection
 let con = mysql.createConnection({
@@ -57,6 +56,18 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// Token verification middleware
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.sendStatus(401);
+    jwt.verify(token, 'your-secret-key', (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+};
+
 app.get('/', (req, res) => {
     res.render('index', { loggedIn: req.session.loggedIn });
 });
@@ -91,24 +102,17 @@ app.get('/profile', (req, res) => {
     });
 });
 
-
-
 app.get('/userreg', (req, res) => {
     res.render('userreg');
 });
-/* app.get('/favorites', (req, res) => {
-    res.render('favorites'); 
-});
-*/
+
 app.get('/tutorials', (req, res) => {
     res.render('tutorials', { loggedIn: req.session.loggedIn });
 });
- 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware to parse URL-encoded form data
-//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
 // Serve the HTML file
@@ -127,8 +131,8 @@ app.get('/login',(req, res) => {
 app.get('/profile',(req, res) => {
     res.sendFile(path.join(__dirname, '/profile'));
 });
+
 // Handle the form submission for recipes
-//below is the route for creating the recipe
 app.post('/recipe-submission', upload.single('recipephoto'), function(req, res) {
     try {
         const { recipename, ingredients, recipesteps, recipecategory, nutrition } = req.body;
@@ -250,7 +254,6 @@ app.get('/recipe', async(req, res) => {
     });
 }); 
 
-
 app.get('/search', (req, res) => {
     const recipeName = req.query.query; // Get the search query from the request
 
@@ -314,18 +317,6 @@ app.get('/users', async(req, res) => {
     });
 });
 
-app.get('/users-gender', async(req, res) => {
-    let sql = "SELECT * FROM users ORDER BY gender";
-    con.query(sql, (err, results) => {
-        if (err) {
-            console.error("Error fetching users:", err);
-            return res.status(500).send("Database error");
-        }
-        res.json(results);
-    });
-});
-
-
 app.get('/recipes', async(req, res) => {
     const recipeId = req.params.id;
     let sql = "SELECT *FROM recipe";
@@ -339,6 +330,7 @@ app.get('/recipes', async(req, res) => {
         
     });
 }); 
+
 app.get('/recipes/:id', async(req, res) => {
     const recipeId = req.params.id;
     let sql = "SELECT * FROM recipe WHERE recipe_id = ?";
@@ -355,6 +347,7 @@ app.get('/recipes/:id', async(req, res) => {
         }
     });
 });
+
 app.get('/recipes-categories', async(req, res) => {
     let sql = "SELECT * FROM recipe ORDER BY category";
     con.query(sql, (err, results) => {
@@ -366,6 +359,73 @@ app.get('/recipes-categories', async(req, res) => {
     });
 });
 
+//below are the get and post using secure api endpoints
+app.post('/api/register', async (req, res) => {
+    try {
+        const username = 'Messi';
+        const email = 'messi@gmail.com';
+        const password = 'nottherealGOAT';
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const sql = "INSERT INTO api_users (username, email, password) VALUES (?, ?, ?)";
+        con.query(sql, [username, email, hashedPassword], (err, result) => {
+            if (err) {
+                console.error("Error inserting data:", err);
+                return res.status(500).send("Database error");
+            }
+            const token = jwt.sign({ userId: result.insertId }, 'your-secret-key', { expiresIn: '1h' });
+            res.json({ message: 'API user registered successfully', token });
+        });
+    } catch (error) {
+        console.error("Error during registration:", error);
+        res.status(500).send("Server error");
+    }
+});
+
+app.get('/api/recipes', authenticateToken, async (req, res) => {
+    let sql = "SELECT * FROM recipe";
+    con.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching recipes:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json(results);
+    });
+});
+app.get('/all-users', authenticateToken, async(req, res) => {
+    let sql = "SELECT * FROM users";
+    con.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching users:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json(results);
+    });
+});
+app.get('/users-gender', authenticateToken, async(req, res) => {
+    let sql = "SELECT * FROM users ORDER BY gender";
+    con.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching users:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json(results);
+    });
+});
+app.get('/users-email/:email', authenticateToken, async(req, res) => {
+    const email = req.params.email;
+    let sql = "SELECT * FROM users WHERE email = ?";
+    con.query(sql,[email], (err, results) => {
+        if (err) {
+            console.error("Error fetching users:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/test', (req, res) => {
+    res.send('API is working');
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
