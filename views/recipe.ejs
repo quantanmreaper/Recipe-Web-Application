@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= recipe.recipe_name %></title>
+    <title>Recipe</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -19,7 +19,6 @@
                 <li class="dropdown">
                     <a href="/categories" class="dropbtn" class="active">Recipes</a>
                     <div class="dropdown-content">
-                        <a href="/favorites">Favorites</a>
                         <a href="/tutorials">Cooking Tutorials</a>
                     </div>
                 </li>
@@ -27,81 +26,143 @@
                 <li><a href="/categories" >Categories</a></li>
                 <li><a href="/userreg">Login</a></li>
             </ul>
+           
         </nav>
     </header>
     <!-- Recipe Section -->
+    <form action="/search" method="GET" class="search-container">
+        <input type="text" name="query" placeholder="Search  a recipe" required>
+        <button type="submit">Search</button>
+    </form>
     <div class="recipe-container">
-        <h1 class="recipe-title"><%= recipe.recipe_name %></h1>
-        <h2><%= recipe.category%></h2>
-        <hr>
-        <div class="recipe-meta">
-            <span class="username">User123</span>
-            <span class="fa-date">Date: 10/09/2024</span>
-            <span class="reviews">
-                <span class="review-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
+        <% if (recipe) { %>
+            <h1 class="recipe-title"><%= recipe.recipe_name %></h1>
+            <h2><%= recipe.category %></h2>
+            <hr>
+           
+            <div class="recipe-meta">
+                <span class="username">Jhon Doe</span>
+                <span class="fa-date">Date: 10/09/2024</span>
+                <span class="reviews">
+                    <span class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </span>
+                    <span class="review-count">120 reviews</span>
                 </span>
-                <span class="review-count">(120 reviews)</span>
-            </span>
-        </div>
-        <div class="recipe-image">
-            <img src="/images/chillisoup.png" alt="Dum Veg Biryani" width="1389px" height="781px">
-        </div>
-    
-        <!-- Recipe details section -->
-        <div class="recipe-details">
-            <!-- Ingredients Section -->
-            <div class="ingredients">
-                <h2>Ingredients</h2>
-                <ul>
-                <% recipe.ingredients.split(/\r?\n/).forEach(ingredient => { %>
-                    <li><%= ingredient.trim() %></li>
-                <% }) %>
-                </ul>
-            </div> 
-            
-    
-            <!-- Instructions Section -->
-            <div class="instructions">
-                <h2>Instructions</h2>
-
-                <ul>
-                    
-                    <% recipe.recipe_steps.split(/\r?\n/).forEach(recipe_steps => { %>
-                        <li><%= recipe_steps.trim() %></li>
-                    <% }) %>
-                  
-                </ul>
-
-               <!--  <ol type="1">
-                    <li>Soak rice for 30 minutes.</li>
-                    <li>Heat ghee and fry onions till golden brown.</li>
-                    <li>Add mixed vegetables and spices. Cook for 10 minutes.</li>
-                    <li>Layer the rice and cook on dum for 20 minutes.</li>
-                    
-                     Add more steps
-                </ol> -->
             </div>
-    
-            <!-- Nutritional Value Section -->
-            <div class="nutrition">
-                <h2>Nutritional Facts</h2>
-                <ul>
-                    <% recipe.nutritional_value.split(/\r?\n/).forEach(nutritional_value => { %>
-                        <li><%= nutritional_value %></li>
-                    <% }) %>
-                </ul>
-
+            <div class="recipe-image">
+                <img src="<%= recipe.finalimage %>" alt="Dum Veg Biryani" width="1389px" height="781px">
             </div>
-            
-        </div>
+        
+            <!-- Recipe details section -->
+            <div class="recipe-details">
+                <!-- Ingredients Section -->
+                <div class="ingredients">
+                    <h2>Ingredients</h2>
+                    <ul>
+                    <% if (recipe.ingredients) { %>
+                        <% recipe.ingredients.split(/\r?\n/).forEach(ingredient => { %>
+                            <li><%= ingredient.trim() %></li>
+                        <% }) %>
+                    <% } %>
+                    </ul>
+                </div> 
+                
+        
+                <!-- Instructions Section -->
+                <div class="instructions">
+                    <h2>Instructions</h2>
+    
+                    <ul>
+                    <% if (recipe.recipe_steps) { %>
+                        <% recipe.recipe_steps.split(/\r?\n/).forEach(recipe_steps => { %>
+                            <li><%= recipe_steps.trim() %></li>
+                        <% }) %>
+                    <% } %>
+                    </ul>
+    
+                   <!--  <ol type="1">
+                        <li>Soak rice for 30 minutes.</li>
+                        <li>Heat ghee and fry onions till golden brown.</li>
+                        <li>Add mixed vegetables and spices. Cook for 10 minutes.</li>
+                        <li>Layer the rice and cook on dum for 20 minutes.</li>
+                        
+                         Add more steps
+                    </ol> -->
+                </div>
+        
+                <!-- Nutritional Value Section -->
+                <div class="nutrition">
+                    <h2>Nutritional Facts</h2>
+                    <ul>
+                    <% if (recipe.nutritional_value) { %>
+                        <% recipe.nutritional_value.split(/\r?\n/).forEach(nutritional_value => { %>
+                            <li><%= nutritional_value %></li>
+                        <% }) %>
+                    <% } %>
+                    </ul>
+                </div>
+                
+            </div>
+        <% } else { %>
+            <h1 class="recipe-title">Static Recipe Name</h1>
+            <h2>Static Category</h2>
+            <hr>
+            <div class="recipe-meta">
+                <span class="username">Static User</span>
+                <span class="fa-date">Date: 01/01/2023</span>
+                <span class="reviews">
+                    <span class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </span>
+                    <span class="review-count">(10 reviews)</span>
+                </span>
+            </div>
+            <div class="recipe-image">
+                <img src="/images/chillisoup.png" alt="Static Recipe Image" width="1389px" height="781px">
+            </div>
+            <div class="recipe-details">
+                <div class="ingredients">
+                    <h2>Ingredients</h2>
+                    <ul>
+                        <li>Ingredient 1</li>
+                        <li>Ingredient 2</li>
+                        <li>Ingredient 3</li>
+                    </ul>
+                </div>
+                <div class="instructions">
+                    <h2>Instructions</h2>
+                    <ul>
+                        <li>Step 1</li>
+                        <li>Step 2</li>
+                        <li>Step 3</li>
+                    </ul>
+                </div>
+                <div class="nutrition">
+                    <h2>Nutritional Facts</h2>
+                    <ul>
+                        <li>Fact 1</li>
+                        <li>Fact 2</li>
+                        <li>Fact 3</li>
+                    </ul>
+                </div>
+            </div>
+        <% } %>
     </div>
     <br><br><br><br><br>
-
+    
+    <div>
+        <p class="direct-recipereg">Would you like to add some Recipes? <a href="/recipereg">Click Me</a></p>
+    </div>
+    
 <!-- Footer Section -->
 <footer>
     <div class="footer-container">

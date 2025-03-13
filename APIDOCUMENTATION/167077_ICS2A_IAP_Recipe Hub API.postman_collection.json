@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "65ca3b63-27c5-4270-ac4a-fcf332f58765",
+		"name": "167077_ICS2A_IAP_Recipe Hub API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39995050"
+	},
+	"item": [
+		{
+			"name": "Getting All Recipes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recipes"
+					]
+				},
+				"description": "### **Get/recipes\n\n**  \nThe endpoint retrieves a list of recipes in JSON format. The response will include an array of recipe objects, each containing the following properties:\n\n- recipe_id (number): The unique identifier for the recipe.\n    \n- recipe_name (string): The name of the recipe.\n    \n- ingredients (string): The list of ingredients required for the recipe.\n    \n- recipe_steps (string): The steps to prepare the recipe.\n    \n- category (string): The category or type of the recipe.\n    \n- finalimage (object): An object containing the type and data of the final image associated with the recipe.\n    \n    - type (string): The type/format of the image.\n        \n    - data (array): An array representing the image data.\n        \n- nutritional_value (string): The nutritional value or information related to the recipe.\n    \n\nExample Response:\n\n``` json\n[\n    {\n        \"recipe_id\": 3,\n        \"recipe_name\": \"Vada Pav\",\n        \"ingredients\": \"Red Tomatoe Sauce\\r\\nTomatoes\\r\\nPasta\\r\\nSalt\\r\\nPepper\\r\\nWater\\r\\nCorriander\\r\\nIndian Spices\",\n        \"recipe_steps\": \"Boil Water\\r\\nAdd Pasta\\r\\nAdd some teaspoons of salt\\r\\nLet it cook\",\n        \"category\": \"lunch\",\n        \"finalimage\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                114,\n                101,\n                99,\n                105,\n                112,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                51,\n                56,\n                57,\n                53,\n                53,\n                53,\n                50,\n                49,\n                57,\n                45,\n                53,\n                55,\n                48,\n                53,\n                53,\n                49,\n                52,\n                51,\n                48,\n                46,\n                106,\n                112,\n                101,\n                103\n            ]\n        },\n        \"nutritional_value\": \"Carbohydrates 100mg  \\nProteins  50mg \\nFats  10mg\\nVitamins  0.1mg\\nCalcium  0mg\\n\\n\"\n    }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Getting Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				},
+				"description": "### Get/users\n\nThe endpoint retrieves a list of users. The response returned is a JSON array containing user objects with the following properties:\n\n- user_id (number): The unique identifier for the user.\n    \n- username (string): The username of the user.\n    \n- email (string): The email address of the user.\n    \n- usertype (string): The type of user.\n    \n- password (string): The password of the user.\n    \n- gender (string): The gender of the user.\n    \n- profilephoto (object): An object containing the profile photo details with the following properties:\n    \n    - type (string): The type of the profile photo.\n        \n    - data (array): An array of data related to the profile photo.\n        \n\n``` json\nExample Response:\n[\n    {\n        \"user_id\": 1,\n        \"username\": \"Jhon Doe\",\n        \"email\": \"doe@gmail.com\",\n        \"usertype\": \"user\",\n        \"password\": \"doe\",\n        \"gender\": \"\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                51,\n                54,\n                57,\n                56,\n                54,\n                52,\n                56,\n                48,\n                57,\n                45,\n                50,\n                57,\n                57,\n                53,\n                57,\n                54,\n                57,\n                55,\n                53,\n                46,\n                106,\n                112,\n                103\n            ]\n        }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Getting Users By Gender",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is set to application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the response schema for user object properties\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"    responseData.forEach(user => {\r",
+							"        pm.expect(user).to.have.property('user_id').that.is.a('number');\r",
+							"        pm.expect(user).to.have.property('username').that.is.a('string');\r",
+							"        pm.expect(user).to.have.property('email').that.is.a('string');\r",
+							"        pm.expect(user).to.have.property('usertype').that.is.a('string');\r",
+							"        pm.expect(user).to.have.property('password').that.is.a('string');\r",
+							"        pm.expect(user).to.have.property('gender').that.is.a('string');\r",
+							"        pm.expect(user).to.have.property('profilephoto').that.is.an('object');\r",
+							"        pm.expect(user.profilephoto).to.have.property('type').that.is.a('string');\r",
+							"        pm.expect(user.profilephoto).to.have.property('data').that.is.an('array');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Profilephoto object contains type and data properties\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"    responseData.forEach(function(user) {\r",
+							"        pm.expect(user.profilephoto).to.be.an('object');\r",
+							"        pm.expect(user.profilephoto).to.have.property('type');\r",
+							"        pm.expect(user.profilephoto).to.have.property('data');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>User ID</th>\r",
+							"        <th>Username</th>\r",
+							"        <th>Email</th>\r",
+							"        <th>User Type</th>\r",
+							"        <th>Password</th>\r",
+							"        <th>Gender</th>\r",
+							"        <th>Profile Photo Type</th>\r",
+							"        <th>Profile Photo Data</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response}}\r",
+							"        <tr>\r",
+							"            <td>{{user_id}}</td>\r",
+							"            <td>{{username}}</td>\r",
+							"            <td>{{email}}</td>\r",
+							"            <td>{{usertype}}</td>\r",
+							"            <td>{{password}}</td>\r",
+							"            <td>{{gender}}</td>\r",
+							"            <td>{{profilephoto.type}}</td>\r",
+							"            <td>{{profilephoto.data}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users-gender",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users-gender"
+					]
+				},
+				"description": "### **Getting Users By Gender**\n\nThe endpoint retrieves a list of users along with their gender information.\n\n#### Response Body\n\n- `user_id` (number): The unique identifier for the user.\n    \n- `username` (string): The username of the user.\n    \n- `email` (string): The email address of the user.\n    \n- `usertype` (string): The type of user.\n    \n- `password` (string): The password of the user.\n    \n- `gender` (string): The gender of the user.\n    \n- `profilephoto` (object): An object containing the profile photo information.\n    \n    - `type` (string): The type of the profile photo.\n        \n    - `data` (array): An array of data related to the profile photo.\n        \n\n#### Response\n\nThe response will be in JSON format with an array of user objects containing their gender information.\n\nThis can be represented as a JSON schema as follows:\n\n``` json\n[\n    {\n        \"user_id\": 1,\n        \"username\": \"Jhon Doe\",\n        \"email\": \"doe@gmail.com\",\n        \"usertype\": \"user\",\n        \"password\": \"doe\",\n        \"gender\": \"female\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                51,\n                54,\n                57,\n                56,\n                54,\n                52,\n                56,\n                48,\n                57,\n                45,\n                50,\n                57,\n                57,\n                53,\n                57,\n                54,\n                57,\n                55,\n                53,\n                46,\n                106,\n                112,\n                103\n            ]\n        }\n    },\n    {\n        \"user_id\": 3,\n        \"username\": \"Hetvi Barot\",\n        \"email\": \"barot@gmail.com\",\n        \"usertype\": \"user\",\n        \"password\": \"barot\",\n        \"gender\": \"female\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                51,\n                56,\n                53,\n                55,\n                57,\n                51,\n                52,\n                57,\n                57,\n                45,\n                56,\n                50,\n                56,\n                52,\n                54,\n                57,\n                48,\n                54,\n                57,\n                46,\n                106,\n                112,\n                101,\n                103\n            ]\n        }\n    },\n    {\n        \"user_id\": 2,\n        \"username\": \"Tom Rockins\",\n        \"email\": \"tom@gmail.com\",\n        \"usertype\": \"recipe_owner\",\n        \"password\": \"tom\",\n        \"gender\": \"male\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                51,\n                54,\n                57,\n                57,\n                49,\n                53,\n                57,\n                49,\n                50,\n                45,\n                55,\n                57,\n                57,\n                55,\n                50,\n                53,\n                57,\n                48,\n                48,\n                46,\n                106,\n                112,\n                101,\n                103\n            ]\n        }\n    },\n    {\n        \"user_id\": 4,\n        \"username\": \"Ronaldo\",\n        \"email\": \"cr7@gmail.com\",\n        \"usertype\": \"user\",\n        \"password\": \"cr7\",\n        \"gender\": \"male\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                52,\n                53,\n                55,\n                49,\n                57,\n                50,\n                56,\n                53,\n                56,\n                45,\n                52,\n                49,\n                51,\n                56,\n                50,\n                54,\n                51,\n                51,\n                56,\n                46,\n                106,\n                112,\n                101,\n                103\n            ]\n        }\n    },\n    {\n        \"user_id\": 5,\n        \"username\": \"Austin Kimathi\",\n        \"email\": \"austin@gmail.com\",\n        \"usertype\": \"recipe_owner\",\n        \"password\": \"topg\",\n        \"gender\": \"male\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                53,\n                53,\n                54,\n                56,\n                52,\n                55,\n                51,\n                48,\n                52,\n                45,\n                49,\n                49,\n                51,\n                49,\n                57,\n                55,\n                51,\n                54,\n                54,\n                46,\n                106,\n                112,\n                101,\n                103\n            ]\n        }\n    },\n    {\n        \"user_id\": 6,\n        \"username\": \"Tester\",\n        \"email\": \"test@gmail.com\",\n        \"usertype\": \"user\",\n        \"password\": \"test\",\n        \"gender\": \"male\",\n        \"profilephoto\": {\n            \"type\": \"Buffer\",\n            \"data\": [\n                47,\n                117,\n                112,\n                108,\n                111,\n                97,\n                100,\n                115,\n                47,\n                112,\n                114,\n                111,\n                102,\n                105,\n                108,\n                101,\n                112,\n                104,\n                111,\n                116,\n                111,\n                45,\n                49,\n                55,\n                51,\n                50,\n                53,\n                54,\n                51,\n                54,\n                50,\n                53,\n                50,\n                53,\n                50,\n                45,\n                53,\n                51,\n                50,\n                48,\n                49,\n                49,\n                51,\n                54,\n                56,\n                46,\n                106,\n                112,\n                101,\n                103\n            ]\n        }\n    }\n]\n\n ```\n\nThis endpoint retrieves the gender information of users."
+			},
+			"response": []
+		},
+		{
+			"name": "Recipe Information By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/recipes/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recipes",
+						"4"
+					]
+				},
+				"description": "### GET /recipes/4\n\nThis endpoint retrieves the details of a specific recipe identified by the recipe ID.\n\n#### Response\n\nThe response will be in JSON format with the following schema:\n\n``` json\n{\n    \"recipe_id\": 4,\n    \"recipe_name\": \"Burrito Wrap \",\n    \"ingredients\": \"Olive oil\\r\\nRed onion\\r\\nGarlic\\r\\nCrushed tomatoes (San Marzano or best quality)\\r\\nOregano\\r\\nFresh basil\\r\\nSugar\\r\\nSalt\\r\\nPasta of any shape\\r\\nParmesan or Pecorino Romano cheese, to garnish\",\n    \"recipe_steps\": \"Boil water\\r\\nAdd pasta\\r\\nTake some spices add it\\r\\nTake the tomatoe puree add it\",\n    \"category\": \"vegan\",\n    \"finalimage\": {\n        \"type\": \"Buffer\",\n        \"data\": [\n            47,\n            117,\n            112,\n            108,\n            111,\n            97,\n            100,\n            115,\n            47,\n            114,\n            101,\n            99,\n            105,\n            112,\n            101,\n            112,\n            104,\n            111,\n            116,\n            111,\n            45,\n            49,\n            55,\n            51,\n            50,\n            51,\n            57,\n            48,\n            49,\n            50,\n            49,\n            55,\n            54,\n            50,\n            45,\n            54,\n            48,\n            54,\n            53,\n            55,\n            52,\n            56,\n            51,\n            57,\n            46,\n            106,\n            112,\n            101,\n            103\n        ]\n    },\n    \"nutritional_value\": \"\"\n}\n\n ```\n\nThe response will have a status code of 200 and a content type of `application/json`."
+			},
+			"response": []
+		},
+		{
+			"name": "Recipe By Category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>ID</th>\r",
+							"        <th>Recipe Name</th>\r",
+							"        <th>Ingredients</th>\r",
+							"        <th>Recipe Steps</th>\r",
+							"        <th>Category</th>\r",
+							"        <th>Nutritional Value</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response}}\r",
+							"        <tr>\r",
+							"            <td>{{recipe_id}}</td>\r",
+							"            <td>{{recipe_name}}</td>\r",
+							"            <td>{{ingredients}}</td>\r",
+							"            <td>{{recipe_steps}}</td>\r",
+							"            <td>{{category}}</td>\r",
+							"            <td>{{nutritional_value}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/recipes-categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recipes-categories"
+					]
+				},
+				"description": "### GET /recipes-categories\n\nThis endpoint retrieves a list of recipe categories.\n\n#### Response\n\nThe response is a JSON array containing objects with the following properties:\n\n- `recipe_id` (number): The ID of the recipe.\n    \n- `recipe_name` (string): The name of the recipe.\n    \n- `ingredients` (string): The list of ingredients required for the recipe.\n    \n- `recipe_steps` (string): The steps to prepare the recipe.\n    \n- `category` (string): The category of the recipe.\n    \n- `finalimage` (object): An object containing the type and data of the final image.\n    \n    - `type` (string): The type of the image.\n        \n    - `data` (array): An array representing the image data.\n        \n- `nutritional_value` (string): The nutritional value of the recipe.\n    \n\n#### JSON Schema\n\n``` json\n[\n    {\n        \"type\": \"object\",\n        \"properties\": {\n            \"recipe_id\": {\n                \"type\": \"number\"\n            },\n            \"recipe_name\": {\n                \"type\": \"string\"\n            },\n            \"ingredients\": {\n                \"type\": \"string\"\n            },\n            \"recipe_steps\": {\n                \"type\": \"string\"\n            },\n            \"category\": {\n                \"type\": \"string\"\n            },\n            \"finalimage\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"type\": {\n                        \"type\": \"string\"\n                    },\n                    \"data\": {\n                        \"type\": \"array\"\n                    }\n                }\n            },\n            \"nutritional_value\": {\n                \"type\": \"string\"\n            }\n        }\n    }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Creating New Recipe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "recipename",
+							"value": "Ice cream",
+							"type": "text"
+						},
+						{
+							"key": "ingredients",
+							"value": "Olive oil\nRed onion\nGarlic\nCrushed tomatoes (San Marzano or best quality)\nOregano\nFresh basil\nSugar\nSalt\nPasta of any shape\nParmesan or Pecorino Romano cheese, to garnish",
+							"type": "text"
+						},
+						{
+							"key": "recipesteps",
+							"value": "Boil water\nAdd pasta\nTake some spices add it\nTake the tomatoe puree add it",
+							"type": "text"
+						},
+						{
+							"key": "nutrition",
+							"value": "Protiens 100g\nCarbohydrates 200g\nCalcium 50g",
+							"type": "text"
+						},
+						{
+							"key": "recipecategory",
+							"value": "Dessert",
+							"type": "text"
+						},
+						{
+							"key": "recipephoto",
+							"type": "file",
+							"src": "/C:/Users/User/Downloads/icecream.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/recipe-submission",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recipe-submission"
+					]
+				},
+				"description": "### Recipe Submission\n\nThis endpoint allows the user to submit a new recipe along with its details.\n\n#### Request Body\n\n- `recipename` (text): Name of the recipe\n    \n- `ingredients` (text): List of ingredients required for the recipe\n    \n- `recipesteps` (text): Step-by-step instructions to prepare the recipe\n    \n- `nutrition` (text): Nutritional information for the recipe\n    \n- `recipecategory` (text): Category of the recipe\n    \n- `recipephoto` (file): Photo of the prepared recipe\n    \n\n#### Response\n\nThe response for this request is a JSON schema that represents the structure of the response data. It includes the properties and their data types that the user can expect to receive upon successful submission of the recipe."
+			},
+			"response": []
+		},
+		{
+			"name": "User Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/user-submission",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user-submission"
+					]
+				},
+				"description": "## Registering A User\n\nThe `POST` request to `/api/user-submission` endpoint is used to submit user details for registration. The request should include the following parameters in the request body:\n\n#### Request Body\n\n- `name` (text): The name of the user.\n    \n- `email` (text): The email address of the user.\n    \n- `password` (text): The password for the user account.\n    \n- `usertype` (text): The type of user account (e.g., admin, regular user).\n    \n- `gender` (text): The gender of the user.\n    \n- `profile photo` (file): The profile photo of the user.\n    \n\nUpon successful submission, the endpoint returns a response with the relevant details of the user account.\n\nThis endpoint allows the user to submit data to the API."
+			},
+			"response": []
+		},
+		{
+			"name": "API user with access token SECURE ENDPOINT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "### Register User\n\nThis endpoint is used to register a new user.\n\n**Request Body**\n\n- `username` (text, required): The username of the user.\n    \n- `password` (text, required): The password for the user account.\n    \n\n**Response**\n\n- `message` (string): A message indicating the result of the registration process.\n    \n- `token` (string): A token for the registered user.\n    \n\nExample:\n\n``` json\n{\n    \"message\": \"User registered successfully\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "All Recipes on SECURE ENDPOINT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjczNDI5NywiZXhwIjoxNzMyNzM3ODk3fQ.faXwxGDtSDGVpP58UbyccVIuAQDAJe1-G7v_8PW0CwQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"recipes"
+					]
+				},
+				"description": "### Retrieve Recipes\n\nThis a secure endpoint is used to retrieve a list of recipes. Only accessible if usertaken is used and is valid.\n\n#### Request Body\n\nThis is a GET request and does not require a request body.\n\n#### Response\n\n- Status: 200 OK\n    \n- Content-Type: application/json\n    \n\nExample response body:\n\n``` json\n[\n    {\n        \"recipe_id\": 0,\n        \"recipe_name\": \"\",\n        \"ingredients\": \"\",\n        \"recipe_steps\": \"\",\n        \"category\": \"\",\n        \"finalimage\": {\n            \"type\": \"\",\n            \"data\": [0]\n        },\n        \"nutritional_value\": \"\"\n    }\n]\n\n ```\n\nThe response contains an array of recipe objects, each with a unique recipe ID, name, ingredients, steps, category, image type and data, and nutritional value."
+			},
+			"response": []
+		},
+		{
+			"name": "Displaying all users on a SECURE ENDPOINT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjczNDI5NywiZXhwIjoxNzMyNzM3ODk3fQ.faXwxGDtSDGVpP58UbyccVIuAQDAJe1-G7v_8PW0CwQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/all-users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"all-users"
+					]
+				},
+				"description": "# Get All Users\n\nThis **SECURE** endpoint retrieves a list of all users.\n\n### Example Response\n\n``` json\n[\n    {\n        \"user_id\": 0,\n        \"username\": \"\",\n        \"email\": \"\",\n        \"usertype\": \"\",\n        \"password\": \"\",\n        \"gender\": \"\",\n        \"profilephoto\": {\n            \"type\": \"\",\n            \"data\": [0]\n        }\n    }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "SECURE ENDPOINT Displaying Users By Gender",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjczNDI5NywiZXhwIjoxNzMyNzM3ODk3fQ.faXwxGDtSDGVpP58UbyccVIuAQDAJe1-G7v_8PW0CwQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users-gender",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users-gender"
+					]
+				},
+				"description": "### Get Users by Gender\n\nThis a **SECURE** endpoint retrieves a list of users along with their gender information.\n\n#### Request Body\n\nThis is a GET request and does not require a request body.\n\n#### Response\n\n- Status: 200 OK\n    \n- Content-Type: application/json\n    \n\nExample response body:\n\n``` json\n[\n    {\n        \"user_id\": 0,\n        \"username\": \"\",\n        \"email\": \"\",\n        \"usertype\": \"\",\n        \"password\": \"\",\n        \"gender\": \"\",\n        \"profilephoto\": {\n            \"type\": \"\",\n            \"data\": [0]\n        }\n    }\n]\n\n ```\n\nThe response contains an array of user objects, each including user ID, username, email, user type, password, gender, and profile photo information."
+			},
+			"response": []
+		},
+		{
+			"name": "SECURE ENDPOINT for displaying user by email",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjczNDI5NywiZXhwIjoxNzMyNzM3ODk3fQ.faXwxGDtSDGVpP58UbyccVIuAQDAJe1-G7v_8PW0CwQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users-email/cr7@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users-email",
+						"cr7@gmail.com"
+					]
+				},
+				"description": "This endpoint retrieves user information based on the provided email address. The request should be made using an HTTP GET method to the specified URL. The response will have a status code of 200 and a content type of application/json. The response will include an array of user objects, each containing user_id, username, email, usertype, password, gender, and profilephoto details. To access this endpoint, the user needs to add titles and pick the token from the bearer token value."
+			},
+			"response": []
+		}
+	]
+}

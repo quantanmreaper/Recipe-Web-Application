@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking Tutorials</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1><!-- <img src="./images/logo.jpg" width="50px" height="100px" alt="Recipe Hub Logo"> -->Recipe Hub</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/index" class="active">Home</a></li>
+                <li class="dropdown">
+                    <a href="/categories" >Recipes</a>
+                    <div class="dropdown-content">
+                        <a href="/recipe">Recipes</a>
+                        <a href="/tutorials">Cooking Tutorials</a>
+                    </div>
+                </li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <% if (!loggedIn) { %>
+                    <li><a href="/login">Login</a></li>
+                <% } else { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Cooking Tutorials</h1>
+        <div class="tutorials" id="tutorials">
+            <!-- YouTube tutorials will be displayed here -->
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h2>Recipe Hub</h2>
+                <p>
+                Recipe Hub is a platform to enjoy the richness of taste
+                Enjoy the taste of life with Recipe Hub everyday with new and fresh recipes
+            </p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Recipe Hub</h3>
+                    <ul>
+                        <li><a href="/">About us</a></li>
+                        <li><a href="/">Careers</a></li>
+                        <li><a href="/">Contact us</a></li>
+                        <li><a href="/">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/">Terms</a></li>
+                        <li><a href="/">Conditions</a></li>
+                        <li><a href="/">Cookies</a></li>
+                        <li><a href="/">Copyright</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Follow</h3>
+                    <ul>
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className="bi bi-facebook"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                              </svg>
+                            </a>
+                          </li> 
+                          <li>
+                            <a href="https://x.com/?mx=2" target="_blank">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className="bi bi-twitter"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                              </svg>
+                            </a>
+                          </li>                       
+                        <li>
+                            <a href="https://www.instagram.com/?hl=en" target="_blank">
+                              <svg
+                                xmlns="https://www.w3.org/TR/SVG2/"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className="bi bi-instagram"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.392.573.92 1.038 1.645 1.329.608.216 1.364.364 2.35.415 1.173.063 2.908.094 5.029.094s3.856-.03 5.029-.094c.986-.05 1.742-.199 2.35-.415a4.745 4.745 0 0 0 1.645-.996c.223-.539.401-1.225.476-2.089A15.007 15.007 0 0 0 16 8c0-1.097-.03-2.183-.049-2.769-.076-.864-.254-1.551-.478-2.09-.392-.573-.92-1.038-1.645-1.329-.608-.216-1.364-.364-2.35-.415C11.907 2.03 10.172 1.999 8.051 1.999zM6.354 10.454V5.546l4.546 2.454-4.546 2.454z"/>
+                              </svg>
+                            </a>
+                          </li>         
+                          <li>
+                            <a href="https://www.youtube.com/" target="_blank">
+                                <svg 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    width="16" 
+                                    height="16" 
+                                    fill="currentColor" 
+                                    class="bi bi-youtube" 
+                                    viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8.051 1.999c-2.121 0-3.856.03-5.029.094-.986.05-1.742.199-2.35.415A4.745 4.745 0 0 0 .527 3.504C.303 4.043.125 4.73.049 5.594A15.007 15.007 0 0 0 0 8c0 1.097.03 2.183.049 2.769.076.864.254 1.551.478 2.09.392.573.92 1.038 1.645 1.329.608.216 1.364.364 2.35.415 1.173.063 2.908.094 5.029.094s3.856-.03 5.029-.094c.986-.05 1.742-.199 2.35-.415a4.745 4.745 0 0 0 1.645-.996c.223-.539.401-1.225.476-2.089A15.007 15.007 0 0 0 16 8c0-1.097-.03-2.183-.049-2.769-.075-.864-.253-1.55-.476-2.089a4.745 4.745 0 0 0-1.645-.996c-.608-.216-1.364-.364-2.35-.415C11.907 2.03 10.172 1.999 8.051 1.999zM6.354 10.454V5.546l4.546 2.454-4.546 2.454z"/>
+                                </svg>
+                            </a>
+                        </li>
+                                                         
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2020 RecipeHub - All rights reserved</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/random-recipes')
+                .then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        const tutorialsDiv = document.getElementById('tutorials');
+                        data.forEach(recipe => {
+                            const videoFrame = document.createElement('iframe');
+                            videoFrame.width = "600";
+                            videoFrame.height = "315";
+                            videoFrame.src = `https://www.youtube.com/embed/${recipe.youtubeId}`;
+                            videoFrame.frameBorder = "0";
+                            videoFrame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                            videoFrame.allowFullscreen = true;
+                            tutorialsDiv.appendChild(videoFrame);
+                        });
+                    } else {
+                        console.error('Data is not an array:', data);
+                    }
+                })
+                .catch(error => console.error('Error fetching recipes:', error));
+        });
+    </script>
+</body>
+</html>
